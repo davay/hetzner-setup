@@ -1,6 +1,0 @@
-# exit if any command exits with non-zero
-set -e
-
-# install ansible and run playbook
-sudo dnf install ansible -y
-ansible-playbook -vv playbooks/heihachi.yml
