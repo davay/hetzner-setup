@@ -1,0 +1,54 @@
+---
+- name: Setup Firefly
+  hosts: localhost
+  vars_prompt:
+    - name: cron_token
+      prompt: "Enter cron_token"
+      private: no
+    - name: db_password
+      prompt: "Enter db_password"
+      private: no
+    - name: app_key
+      prompt: "Enter app_key"
+      private: no
+  tasks:
+    - name: Install Docker
+      dnf: 
+        name: 
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-compose-plugin
+        state: present
+      become: yes
+
+    - name: Ensure ~/firefly exists
+      file:
+        path: ~/firefly
+        state: directory
+
+    - name: Ensure Docker service is started and enabled
+      ansible.builtin.systemd:
+        name: docker
+        state: started
+        enabled: yes
+      become: yes
+    
+    - name: Copy docker-compose.yml
+      template: 
+        src: ~/repos/hetzner-setup/templates/firefly-docker-compose.yml
+        dest: ~/firefly/docker-compose.yml
+    
+    - name: Copy .env
+      template: 
+        src: ~/repos/hetzner-setup/templates/firefly.env
+        dest: ~/firefly/.env
+    
+    - name: Copy db.env
+      template: 
+        src: ~/repos/hetzner-setup/templates/firefly.db.env
+        dest: ~/firefly/.db.env
+
+    - name: Run Docker Compose
+      command: docker compose -f ~/firefly/docker-compose.yml up -d --pull always
+      become: yes
