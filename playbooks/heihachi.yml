@@ -2,12 +2,6 @@
 - name: Setup Heihachi
   hosts: localhost
   tasks:
-    - name: Update all packages
-      dnf:
-        name: "*"
-        state: latest
-      become: yes
-
     - name: Install required packages
       dnf:
         name:
