@@ -1,0 +1,12 @@
+[Unit]
+Description=Heihachi Tekken Discord Bot
+
+[Service]
+Type=simple
+User={{ user }}
+ExecStart=/usr/bin/python{{ python_version }} {{ user }}/repos/heihachi/src/main.py {{ user }}/repos/heihachi/config.json
+Restart=on-failure
+RestartSec=60s
+
+[Install]
+WantedBy=multi-user.target

@@ -3,6 +3,7 @@
   hosts: localhost
   vars:
     python_version: "3.12"
+    user: "{{ ansible_user_id }}"
   vars_prompt:
     - name: discord_token
       prompt: "Enter your Discord token"
@@ -32,5 +33,19 @@
         dest: "~/repos/heihachi/config.json"
         content: |
           {
-            "DISCORD_TOKEN": "{{discord_token}}"
+            "DISCORD_TOKEN": "{{ discord_token }}"
           }
+
+    - name: Create service file
+      template:
+        src: ~/repos/hetzner-setup/templates/heihachi.service.j2
+        dest: /etc/systemd/system/heihachi.service
+    
+    - name: Reload systemd
+      systemd:
+        daemon_reload: yes
+
+    - name: Enable service
+      systemd:
+        name: heihachi.service
+        enabled: yes
