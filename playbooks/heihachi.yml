@@ -1,0 +1,27 @@
+---
+- name: Setup Heihachi
+  hosts: localhost
+  tasks:
+    - name: Update all packages
+      dnf:
+        name: "*"
+        state: latest
+      become: yes
+
+    - name: Install required packages
+      dnf:
+        name:
+          - git
+          - python3
+        state: present
+      become: yes
+
+    - name: Clone Heihachi repository
+      git:
+        repo: 'git@github.com:AbhijeetKrishnan/heihachi.git'
+        dest: ~/repos/heihachi
+        version: main
+
+    - name: Install Heihachi
+      pip:
+        name: ~/repos/heihachi
