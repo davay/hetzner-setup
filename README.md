@@ -1,7 +1,8 @@
 ```
 sudo dnf update -y
-sudo dnf install -y git vim epel-release
-git clone https://github.com/davay/hetzner-setup.git ~/repos/
+sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+sudo dnf install -y git vim epel-release gh
+git clone https://github.com/davay/hetzner-setup.git ~/repos/hetzner-setup
 sudo dnf install ansible -y
 ansible-playbook ~/repos/playbooks/heihachi.yml
 ```

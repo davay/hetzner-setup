@@ -1,21 +1,36 @@
 ---
 - name: Setup Heihachi
   hosts: localhost
+  vars:
+    python_version: "3.12"
+  vars_prompt:
+    - name: discord_token
+      prompt: "Enter your Discord token"
+      private: yes
   tasks:
     - name: Install required packages
       dnf:
         name:
           - git
-          - python3
+          - "python{{ python_version }}"
+          - "python{{ python_version }}-pip"
         state: present
       become: yes
 
     - name: Clone Heihachi repository
       git:
-        repo: 'git@github.com:AbhijeetKrishnan/heihachi.git'
+        repo: https://github.com/TLNBS2405/heihachi.git
         dest: ~/repos/heihachi
-        version: main
 
     - name: Install Heihachi
       pip:
         name: ~/repos/heihachi
+        executable: "pip{{ python_version }}"
+
+    - name: Create config.json file
+      copy:
+        dest: "~/repos/heihachi/config.json"
+        content: |
+          {
+            "DISCORD_TOKEN": "{{discord_token}}"
+          }
