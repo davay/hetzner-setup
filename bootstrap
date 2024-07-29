@@ -3,4 +3,4 @@ set -e
 
 # install ansible and run playbook
 sudo dnf install ansible -y
-ansible-playbook -vv ~/repos/playbook/heihachi.yml
+ansible-playbook -vv playbooks/heihachi.yml
