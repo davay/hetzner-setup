@@ -1,0 +1,43 @@
+---
+- name: Setup NGINX and FirewallD
+  hosts: localhost
+  tasks: 
+    - name: Install NGINX and FirewallD
+      dnf:
+        name: 
+          - nginx
+          - firewalld
+        state: present
+      become: yes
+    
+    - name: Enable and start FirewallD service
+      systemd:
+        name: firewalld
+        enabled: yes
+        state: started
+
+    - name: Configure firewall to allow HTTP traffic
+      ansible.posix.firewalld:
+        zone: public
+        service: http
+        permanent: yes
+        immediate: true
+        state: enabled
+      become: yes
+
+    - name: Configure firewall to allow Firefly traffic
+      ansible.posix.firewalld:
+        zone: public
+        port: 8080/tcp
+        permanent: yes
+        immediate: true
+        state: enabled
+      become: yes
+
+    - name: Enable and start NGINX service
+      systemd:
+        name: nginx
+        enabled: yes
+        state: started
+
+
