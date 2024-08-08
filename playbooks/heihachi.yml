@@ -16,7 +16,6 @@
           - "python{{ python_version }}"
           - "python{{ python_version }}-pip"
         state: present
-      become: yes
 
     - name: Clone Heihachi repository
       git:

@@ -13,26 +13,41 @@
       private: no
   tasks:
     - name: Install Docker
-      dnf: 
+      ansible.builtin.dnf: 
         name: 
           - docker-ce
           - docker-ce-cli
           - containerd.io
           - docker-compose-plugin
         state: present
-      become: yes
+
+    - name: Install Remi RPM repository
+      ansible.builtin.dnf:
+        name: https://rpms.remirepo.net/enterprise/remi-release-9.rpm
+        state: present
+        disable_gpg_check: true
+
+    - name: Reset PHP module
+      command: dnf module reset php
+
+    - name: Enable PHP 8.3 
+      command: dnf module enable php:remi-8.3 -y
+
+    - name: Install PHP
+      ansible.builtin.dnf:
+        name: php
+        state: present
 
     - name: Ensure ~/firefly exists
       file:
         path: ~/firefly
         state: directory
 
-    - name: Ensure Docker service is started and enabled
+    - name: Start and enable Docker service
       ansible.builtin.systemd:
         name: docker
         state: started
         enabled: yes
-      become: yes
     
     - name: Copy docker-compose.yml
       template: 
@@ -51,4 +66,3 @@
 
     - name: Run Docker Compose
       command: docker compose -f ~/firefly/docker-compose.yml up -d --pull always
-      become: yes

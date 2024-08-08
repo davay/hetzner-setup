@@ -1,0 +1,39 @@
+---
+- name: Setup FirewallD
+  hosts: localhost
+  tasks: 
+    - name: Install FirewallD
+      dnf:
+        name: 
+          - firewalld
+        state: present
+    
+    - name: Enable and start FirewallD service
+      systemd:
+        name: firewalld
+        enabled: yes
+        state: started
+
+    - name: Allow HTTP traffic
+      ansible.posix.firewalld:
+        zone: public
+        service: http
+        permanent: yes
+        immediate: true
+        state: enabled
+
+    - name: Allow Firefly traffic
+      ansible.posix.firewalld:
+        zone: public
+        port: 8080/tcp
+        permanent: yes
+        immediate: true
+        state: enabled
+    
+    - name: Allow MariaDB traffic
+      ansible.posix.firewalld:
+        zone: public
+        port: 3306/tcp
+        permanent: yes
+        immediate: true
+        state: enabled
