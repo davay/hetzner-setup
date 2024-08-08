@@ -19,6 +19,7 @@ sudo dnf install -y git vim epel-release gh
 git clone https://github.com/davay/hetzner-setup.git ~/repos/hetzner-setup
 sudo dnf install ansible -y
 ansible-galaxy collection install community.docker
+ansible-playbook ~/repos/hetzner-setup/playbooks/firewalld.yml
 ansible-playbook ~/repos/hetzner-setup/playbooks/nginx.yml
 ansible-playbook ~/repos/hetzner-setup/playbooks/heihachi.yml
 ansible-playbook ~/repos/hetzner-setup/playbooks/firefly.yml
