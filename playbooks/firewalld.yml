@@ -29,11 +29,3 @@
         permanent: yes
         immediate: true
         state: enabled
-    
-    - name: Allow MariaDB traffic
-      ansible.posix.firewalld:
-        zone: public
-        port: 3306/tcp
-        permanent: yes
-        immediate: true
-        state: enabled

@@ -7,7 +7,7 @@
   vars_prompt:
     - name: discord_token
       prompt: "Enter your Discord token"
-      private: yes
+      private: no
   tasks:
     - name: Install required packages
       dnf:
