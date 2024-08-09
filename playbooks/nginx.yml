@@ -2,16 +2,24 @@
 - name: Setup NGINX
   hosts: localhost
   tasks: 
-    - name: Install NGINX
+    - name: Install NGINX and Certbot
       dnf:
         name: 
           - nginx
+          - certbot
+          - python3-certbot-nginx
         state: present
     
+    - name: Copy nginx.conf
+      template: 
+        src: ~/repos/hetzner-setup/templates/nginx.conf
+        dest: /etc/nginx/nginx.conf
+
+    - name: Obtain SSL cert
+      command: certbot --nginx -d firefly.devinl.im --non-interactive --agree-tos --email davay@devinl.im
+
     - name: Enable and start NGINX service
       systemd:
         name: nginx
         enabled: yes
         state: started
-
-

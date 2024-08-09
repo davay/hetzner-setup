@@ -21,6 +21,14 @@
         permanent: yes
         immediate: true
         state: enabled
+    
+    - name: Allow HTTPS traffic
+      ansible.posix.firewalld:
+        zone: public
+        service: https
+        permanent: yes
+        immediate: true
+        state: enabled
 
     - name: Allow Firefly traffic
       ansible.posix.firewalld:
