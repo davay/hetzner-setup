@@ -1,6 +1,9 @@
 ---
 - name: Setup NGINX
   hosts: localhost
+  vars:
+    domain: devinl.im
+    email: davay@devinl.im
   tasks: 
     - name: Install NGINX and Certbot
       dnf:
@@ -8,6 +11,7 @@
           - nginx
           - certbot
           - python3-certbot-nginx
+          - python3-certbot-dns-route53
         state: present
     
     - name: Copy nginx.conf
@@ -21,5 +25,29 @@
         enabled: yes
         state: started
 
+    - name: Ensure .aws directory exists
+      file:
+        path: /root/.aws
+        state: directory
+        mode: '0700'
+
+    - name: Ensure AWS credentials file exists
+      copy:
+        content: |
+          [default]
+          aws_access_key_id = {{ aws_access_key }}
+          aws_secret_access_key = {{ aws_secret_key }}
+        dest: /root/.aws/credentials
+        mode: '0600'
+
     - name: Obtain SSL cert
-      command: certbot --nginx -d firefly.devinl.im --non-interactive --agree-tos --email davay@devinl.im
+      command: > 
+        certbot certonly --dns-route53
+        -d {{ domain }} -d *.{{ domain }} 
+        --non-interactive --agree-tos 
+        --email {{ email }}
+
+    - name: Reload NGINX service to apply SSL changes
+      systemd:
+        name: nginx
+        state: reloaded

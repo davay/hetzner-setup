@@ -20,7 +20,7 @@ git clone https://github.com/davay/hetzner-setup.git ~/repos/hetzner-setup
 sudo dnf install ansible -y
 ansible-galaxy collection install community.docker
 ansible-playbook ~/repos/hetzner-setup/playbooks/firewalld.yml
-ansible-playbook ~/repos/hetzner-setup/playbooks/nginx.yml
+ansible-playbook ~/repos/hetzner-setup/playbooks/nginx.yml -e "aws_access_key=YOUR_ACCESS_KEY aws_secret_key=YOUR_SECRET_KEY"
 ansible-playbook ~/repos/hetzner-setup/playbooks/heihachi.yml
 ansible-playbook ~/repos/hetzner-setup/playbooks/firefly.yml
 ```
@@ -30,4 +30,5 @@ ansible-playbook ~/repos/hetzner-setup/playbooks/firefly.yml
 | Port | App     |
 | ---- | ------- |
 | 80   | NGINX   |
+| 443  | NGINX   |
 | 8080 | Firefly |
