@@ -37,3 +37,12 @@
         permanent: yes
         immediate: true
         state: enabled
+
+    - name: Allow MOSH traffic
+      ansible.posix.firewalld:
+        zone: public
+        port: 60000-61000/udp
+        permanent: yes
+        immediate: true
+        state: enabled
+
