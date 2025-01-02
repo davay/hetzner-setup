@@ -27,8 +27,9 @@ ansible-playbook ~/repos/hetzner-setup/playbooks/firefly.yml
 
 ## Ports
 
-| Port | App     |
-| ---- | ------- |
-| 80   | NGINX   |
-| 443  | NGINX   |
-| 8080 | Firefly |
+| Port            | App     |
+| --------------- | ------- |
+| 80/tcp          | NGINX   |
+| 443/tcp         | NGINX   |
+| 8080/tcp        | Firefly |
+| 60000-61000/udp | MOSH    | 
