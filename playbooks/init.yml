@@ -1,0 +1,55 @@
+---
+- name: Initialize system
+  hosts: localhost
+
+  vars:
+    user: "{{ ansible_user_id }}"
+    base_dir: "/home/{{ user }}/Repos"
+
+  tasks:
+    - name: Install DNF packages
+      ansible.builtin.dnf:
+        name: "{{ item }}"
+        state: present
+      loop: 
+        - neovim
+        - zsh
+        - gh
+        - docker
+        - docker-compose
+        - mosh
+        - nodejs
+      become: true
+
+    - name: Install pnpm globally
+      ansible.builtin.command:
+        cmd: npm install -g pnpm
+
+    - name: Create docker group
+      ansible.builtin.group:
+        name: docker
+        state: present
+      become: true
+
+    - name: Add user to docker group
+      ansible.builtin.user:
+        name: "{{ user }}"
+        groups: docker
+        append: yes
+      become: true
+
+  post_tasks: 
+    - name: Start Systemd services
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        state: started
+        enabled: true
+      become: true
+      loop:
+        - docker.service
+
+    - name: Change user shell to Zsh 
+      ansible.builtin.user:
+        name: "{{ user }}"
+        shell: /bin/zsh
+      become: true
