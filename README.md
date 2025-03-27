@@ -12,7 +12,8 @@ An Ansible setup for my personal vps. Sets up personal tools like mosh and deplo
 sudo dnf update -y
 sudo dnf install -y git 
 git clone https://github.com/davay/hetzner-setup.git
-./hetzner-setup/setup.sh
+cd hetzner-setup
+./setup.sh
 ```
 
 
