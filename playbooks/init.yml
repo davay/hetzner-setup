@@ -17,6 +17,7 @@
         - mosh
         - nodejs
         - uv
+        - lsof
       become: true
 
     - name: Install pnpm globally
