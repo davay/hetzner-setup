@@ -1,11 +1,8 @@
 ---
 - name: Initialize system
   hosts: localhost
-
-  vars:
-    user: "{{ ansible_user_id }}"
-    base_dir: "/home/{{ user }}/Repos"
-
+  vars_files: 
+    - shared_vars.yml
   tasks:
     - name: Install DNF packages
       ansible.builtin.dnf:

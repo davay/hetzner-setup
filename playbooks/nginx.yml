@@ -1,6 +1,8 @@
 ---
 - name: Setup NGINX
   hosts: localhost
+  vars_files: 
+    - shared_vars.yml
   vars:
     domain: devinl.im
     email: davay@devinl.im
@@ -16,7 +18,7 @@
     
     - name: Copy nginx.conf
       template: 
-        src: ~/repos/hetzner-setup/templates/nginx.conf
+        src: "{{ project_root }}/templates/nginx.conf"
         dest: /etc/nginx/nginx.conf
     
     - name: Enable and start NGINX service

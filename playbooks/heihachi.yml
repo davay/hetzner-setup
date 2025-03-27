@@ -1,9 +1,10 @@
 ---
 - name: Setup Heihachi
   hosts: localhost
+  vars_files: 
+    - shared_vars.yml
   vars:
     python_version: "3.12"
-    user: "{{ ansible_user_id }}"
   vars_prompt:
     - name: discord_token
       prompt: "Enter your Discord token"
@@ -19,16 +20,16 @@
     - name: Clone Heihachi repository
       git:
         repo: https://github.com/TLNBS2405/heihachi.git
-        dest: ~/repos/heihachi
+        dest: ~/heihachi
 
     - name: Install Heihachi
       pip:
-        name: ~/repos/heihachi
+        name: ~/heihachi
         executable: "pip{{ python_version }}"
 
     - name: Create config.json file
       copy:
-        dest: "~/repos/heihachi/config.json"
+        dest: "~/heihachi/config.json"
         content: |
           {
             "DISCORD_TOKEN": "{{ discord_token }}"
@@ -36,7 +37,7 @@
 
     - name: Create service file
       template:
-        src: ~/repos/hetzner-setup/templates/heihachi.service.j2
+        src: "{{ project_root }}/templates/heihachi.service.j2"
         dest: /etc/systemd/system/heihachi.service
     
     - name: Reload systemd
