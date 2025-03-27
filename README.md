@@ -10,11 +10,13 @@ An Ansible setup for my personal vps. Sets up personal tools like mosh and deplo
 
 ```
 sudo dnf update -y
-sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
-sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
-sudo dnf install -y git vim epel-release gh mosh nodejs docker-compose
-git clone https://github.com/davay/hetzner-setup.git ~/repos/hetzner-setup
-sudo dnf install ansible -y
+sudo dnf install -y git 
+git clone https://github.com/davay/hetzner-setup.git
+./hetzner-setup/setup.sh
+```
+
+
+```
 ansible-galaxy collection install community.docker
 ansible-playbook ~/repos/hetzner-setup/playbooks/firewalld.yml
 ansible-playbook ~/repos/hetzner-setup/playbooks/nginx.yml -e "aws_access_key=YOUR_ACCESS_KEY aws_secret_key=YOUR_SECRET_KEY"
