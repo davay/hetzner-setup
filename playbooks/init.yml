@@ -16,6 +16,7 @@
         - docker-compose
         - mosh
         - nodejs
+        - uv
       become: true
 
     - name: Install pnpm globally
