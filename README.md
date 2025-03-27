@@ -1,13 +1,10 @@
 ## Description
 
-An Ansible setup for my personal vps. Includes: 
+An Ansible setup for my personal vps. Sets up personal tools like mosh and deploys these services:
 
 - NGINX
 - Heihachi Tekken 8 Discord Bot
-- Firefly III Personal Finance Manager
-- TODO: MTVSRS school proj
-- TODO: Mokujin Tekken 7 Discord Bot
-- TODO: Portfolio site
+- jobs.devinl.im
 
 ## Quick Start
 
@@ -22,14 +19,17 @@ ansible-galaxy collection install community.docker
 ansible-playbook ~/repos/hetzner-setup/playbooks/firewalld.yml
 ansible-playbook ~/repos/hetzner-setup/playbooks/nginx.yml -e "aws_access_key=YOUR_ACCESS_KEY aws_secret_key=YOUR_SECRET_KEY"
 ansible-playbook ~/repos/hetzner-setup/playbooks/heihachi.yml
-ansible-playbook ~/repos/hetzner-setup/playbooks/firefly.yml
 ```
 
 ## Ports
 
-| Port            | App     |
+| Port            | Service     |
 | --------------- | ------- |
 | 80/tcp          | NGINX   |
 | 443/tcp         | NGINX   |
-| 8080/tcp        | Firefly |
+| 5173/tcp        | jobs.devinl.im |
 | 60000-61000/udp | MOSH    | 
+
+## TODO 
+
+Setup jobs.devinl.im

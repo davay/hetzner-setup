@@ -30,10 +30,10 @@
         immediate: true
         state: enabled
 
-    - name: Allow Firefly traffic
+    - name: Allow jobs.devinl.im traffic
       ansible.posix.firewalld:
         zone: public
-        port: 8080/tcp
+        port: 5173/tcp
         permanent: yes
         immediate: true
         state: enabled
