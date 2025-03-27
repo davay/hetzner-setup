@@ -12,7 +12,6 @@
     - name: Install required packages
       dnf:
         name:
-          - git
           - "python{{ python_version }}"
           - "python{{ python_version }}-pip"
         state: present
