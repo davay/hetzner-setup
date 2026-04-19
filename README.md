@@ -6,7 +6,10 @@ An Ansible setup for my personal vps. Sets up personal tools like mosh and deplo
 - Heihachi Tekken 8 Discord Bot
 - jobs.devinl.im
 
-Note: cert renewal should be automatic, but there's a script to manually renew certs too. Hetzner is an IAM user and it has R53 access key.
+Notes: 
+- Cert renewal should be automatic (cron job runs every Monday at 3 AM, but only renews if cert is expiring within 30 days), but there's a script to manually renew certs too. 
+- Hetzner is an IAM user and it has R53 access key.
+- Some parts of this readme is outdated, TODO.
 
 ## Quick Start
 
