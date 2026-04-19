@@ -6,6 +6,8 @@ An Ansible setup for my personal vps. Sets up personal tools like mosh and deplo
 - Heihachi Tekken 8 Discord Bot
 - jobs.devinl.im
 
+Note: cert renewal should be automatic, but there's a script to manually renew certs too. Hetzner is an IAM user and it has R53 access key.
+
 ## Quick Start
 
 ```
@@ -32,7 +34,3 @@ ansible-playbook ~/repos/hetzner-setup/playbooks/heihachi.yml
 | 443/tcp         | NGINX   |
 | 5173/tcp        | jobs.devinl.im |
 | 60000-61000/udp | MOSH    | 
-
-## TODO 
-
-Setup jobs.devinl.im

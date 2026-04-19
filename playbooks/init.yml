@@ -18,6 +18,7 @@
         - nodejs
         - uv
         - lsof
+        - cronie
       become: true
 
     - name: Install pnpm globally
@@ -46,6 +47,7 @@
       become: true
       loop:
         - docker.service
+        - crond.service
 
     - name: Change user shell to Zsh 
       ansible.builtin.user:
